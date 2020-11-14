@@ -1,18 +1,60 @@
-import React, {Component} from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity,} from 'react-native';
-import 'react-native-gesture-handler';
-//import * as Random from 'expo-random';
+import React, { Component } from "react";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,} from "react-native";
+import "react-native-gesture-handler";
+import * as Random from "expo-random";
+import { addAd } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
-class addScreen extends Component{
+class addScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          title: '',
+          text: '',
+        };
+      }
+      
+      handleSubmit = () => {
+        this.props.addAd(this.state.title, this.state.text, Random.getRandomBytes(1024), 1);
+        this.setState({title: '', text: ''});
+      };
+      titleChange(title) {
+        this.setState({title});
+      }
+      textChange(text) {
+        this.setState({text});
+      }
+
+  
     render() {
-        return (
-        <View style={styles.container}>
-            <Text style = {styles.title}>Pridėkite skelbimą!</Text>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Pridėkite skelbimą!</Text>
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={styles.input}
+            value={this.state.title}
+            placeholder="Antraštė"
+            onChangeText={(text) => this.titleChange(text)}
+          />
+          <TextInput
+            style={styles.input}
+            value={this.state.text}
+            placeholder="Skelbimas"
+            onChangeText={(text) => this.textChange(text)}
+          />
         </View>
-        );
-    }
+        <View style={styles.addButtonContainer}>
+          <TouchableOpacity onPress={this.handleSubmit}>
+            <View style={styles.addButton}>
+              <Text style={styles.addButtonText}>Prideti</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -46,11 +88,11 @@ const styles = StyleSheet.create({
     addButton: {
       width: 120,
       height: 60,
-      backgroundColor: '#6cc900',
+      backgroundColor: 'dodgerblue',
       marginLeft: 10,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 20,
+      borderRadius: 10,
     },
     addButtonContainer: {
       flex: 4,
@@ -66,4 +108,9 @@ const styles = StyleSheet.create({
     },
   });
 
-  export default addScreen;
+const mapStateToProps = (state) => {
+  return {
+    advertises: state.advertises,
+  };
+};
+export default connect(mapStateToProps, { addAd })(addScreen);

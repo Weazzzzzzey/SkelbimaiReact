@@ -17,7 +17,7 @@ const store = createStore(combineReducers);
 
 console.log('Before', store.getState());
 store.dispatch(addAd('Sistema', 'Sveiki prisijungę prie Sistemos!', 0, 0));
-store.dispatch(addAd('Taisykles', 'Laikytis sistemos taisyklių!', 1, 0));
+store.dispatch(addAd('Taisyklės', 'Laikytis sistemos taisyklių!', 1, 0));
 console.log('After', store.getState());
 
 class App extends Component {
