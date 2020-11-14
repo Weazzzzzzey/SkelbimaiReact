@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity,} from 'react-native';
 import 'react-native-gesture-handler';
-
+//import * as Random from 'expo-random';
 
 class addScreen extends Component{
     render() {
