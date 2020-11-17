@@ -5,6 +5,6 @@ export function addAd(title, text, adid, userid) {
   export function showAll() {
     return {type: 'SHOW_ALL'};
   }
-  export function deleteAd(id) {
-    return {type: 'DELETE_AD', id: id};
+  export function deleteAd(adid) {
+    return {type: 'DELETE_AD', adid: adid};
   }

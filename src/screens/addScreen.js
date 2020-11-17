@@ -15,7 +15,7 @@ class addScreen extends Component {
       }
       
       handleSubmit = () => {
-        this.props.addAd(this.state.title, this.state.text, Random.getRandomBytes(1024), 1);
+        this.props.addAd(this.state.title, this.state.text, Random.getRandomBytes(1), 1);
         this.setState({title: '', text: ''});
       };
       titleChange(title) {

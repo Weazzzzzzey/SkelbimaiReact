@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {showAll} from '../../store/actions/actions';
 
+
 class showScreen extends Component{
     componentDidMount() {
         this.props.showAll();
@@ -21,6 +22,12 @@ class showScreen extends Component{
               </Text>
               <Text style={styles.text}>
                 {advertise.text}
+              </Text>
+              <Text style={styles.text}>
+                {advertise.adid}
+              </Text>
+              <Text style={styles.text}>
+                {advertise.userid}
               </Text>
             </View>
           ))}

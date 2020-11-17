@@ -20,6 +20,11 @@ export const adReducer = (state = initialState, action) => {
           },
         ],
       };
+      case 'DELETE_AD':
+        const index = state.advertises.findIndex((advertise) => advertise.adid === action.adid);
+        return {
+          advertises: [...state.advertises.slice(0, index), ...state.advertises.slice(index + 1)],
+        };
     default:
       return state;
   }
