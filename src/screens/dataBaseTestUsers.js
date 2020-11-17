@@ -8,11 +8,11 @@ import {
   ScrollView,
   FlatList
 } from 'react-native';
-import {init, addAdvertise} from './../../db';
+import {initUsers, addUser} from '../../db';
 import * as SQLite from 'expo-sqlite'
 
 const db = SQLite.openDatabase('advertises.db');
-init()
+initUsers()
   .then(() => {
     console.log('Initialized database');
   })
@@ -20,20 +20,18 @@ init()
     console.log('Initializing db failed.');
     console.log(err);
   });
-class DataBaseTest extends Component {
+class DataBaseTestUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      advertisetext: '',
       username: '',
-      userid: '',
+      password: '',
       advertiseData: [],
     };
   }
   componentDidMount() {
     db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM advertises', 
+      tx.executeSql('SELECT * FROM users', 
       [],
       (_,results) => {
         var temp=[];
@@ -46,25 +44,19 @@ class DataBaseTest extends Component {
       )
     })
   }
-  titleChange(title) {
-    this.setState({title});
-    console.log(title);
-  }
-  advertiseTextChange(advertisetext) {
-    this.setState({advertisetext});
-  }
   userNameChange(username) {
     this.setState({username});
   }
-  userIdChange(userid) {
-    this.setState({userid});
+  passwordChange(password) {
+    this.setState({password});
   }
+
 
 
  handleSubmit = () => {
   db.transaction((tx) => {
-    tx.executeSql('INSERT INTO advertises (title, advertisetext, username, userid) VALUES (?, ?, ?, ?);', 
-    [this.state.title, this.state.advertisetext, this.state.username, this.state.userid],
+    tx.executeSql('INSERT INTO users (username, password) VALUES (?, ?);', 
+    [this.state.username, this.state.password],
     (_,results) => {
       console.log('Added', results.rowsAffected);
     }
@@ -77,10 +69,7 @@ class DataBaseTest extends Component {
         <ScrollView style={styles.carsContainer}>
           <View style={styles.cars}>
             <Text style={styles.make}>
-              {itemData.item.title} {itemData.item.advertisetext}
-            </Text>
-            <Text style={styles.make}>
-              {itemData.item.username} {itemData.item.userid}
+              {itemData.item.username} {itemData.item.password}
             </Text>
           </View>
         </ScrollView>
@@ -92,27 +81,15 @@ class DataBaseTest extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
-            value={this.state.title}
-            placeholder="Antraste"
-            onChangeText={(text) => this.titleChange(text)}
-          />
-          <TextInput
-            style={styles.input}
-            value={this.state.advertisetext}
-            placeholder="Skelbimas"
-            onChangeText={(text) => this.advertiseTextChange(text)}
-          />
-          <TextInput
-            style={styles.input}
             value={this.state.username}
-            placeholder="Vardas"
+            placeholder="Userio Vardas"
             onChangeText={(text) => this.userNameChange(text)}
           />
           <TextInput
             style={styles.input}
-            value={this.state.userIdChange}
-            placeholder="user ID"
-            onChangeText={(text) => this.userIdChange(text)}
+            value={this.state.password}
+            placeholder="Slaptazodis"
+            onChangeText={(text) => this.passwordChange(text)}
           />
         </View>
         <View style={styles.addButtonContainer}>
@@ -201,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DataBaseTest;
+export default DataBaseTestUsers;

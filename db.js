@@ -20,12 +20,48 @@ export const init = () => {
   return promise;
 };
 
+export const initUsers = () => {
+    const promise = new Promise((resolve, reject) => {
+      db.transaction(tx => {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL);',
+          [],
+          () => {
+            resolve();
+          },
+          (_, err) => {
+            reject(err);
+          }
+        );
+      });
+    });
+    return promise;
+  };
+
 export const addAdvertise = (title, advertisetext, username, userid) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction(tx => {
           tx.executeSql(
             `INSERT INTO advertises (title, advertisetext, username, userid) VALUES (?, ?, ?, ?);`,
             [title, advertisetext, username, userid],
+            (_, result) => {
+              resolve(result);
+            },
+            (_, err) => {
+              reject(err);
+            }
+          );
+        });
+      });
+      return promise;
+};
+
+export const addUser = (title, username, password) => {
+    const promise = new Promise((resolve, reject) => {
+        db.transaction(tx => {
+          tx.executeSql(
+            `INSERT INTO users (id, username, password) VALUES (?, ?);`,
+            [title, username, password],
             (_, result) => {
               resolve(result);
             },

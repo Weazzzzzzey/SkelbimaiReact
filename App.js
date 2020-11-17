@@ -8,6 +8,7 @@ import showScreen from "./src/screens/showScreen";
 import deleteScreen from "./src/screens/deleteScreen";
 import addScreen from "./src/screens/addScreen";
 import databaseScreen from "./src/screens/dataBaseTest";
+import databaseUsersScreen from './src/screens/dataBaseTestUsers';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import combineReducers from "./store/reducers/index";
@@ -35,7 +36,7 @@ class App extends Component {
             <Tab.Screen name="SHOW" component={showScreen} />
             <Tab.Screen name="ADD" component={addScreen} />
             <Tab.Screen name="DELETE" component={deleteScreen} />
-            <Tab.Screen name="DATABASE" component={databaseScreen} />
+            <Tab.Screen name="DATABASE" component={databaseUsersScreen} />
           </Tab.Navigator>
           <StatusBar style="auto" />
         </NavigationContainer>
