@@ -25,6 +25,7 @@ class DataBaseTestUsers extends Component {
     super(props);
     this.state = {
       username: '',
+      email: '',
       password: '',
       advertiseData: [],
     };
@@ -47,6 +48,9 @@ class DataBaseTestUsers extends Component {
   userNameChange(username) {
     this.setState({username});
   }
+  emailChange(email) {
+    this.setState({email});
+  }
   passwordChange(password) {
     this.setState({password});
   }
@@ -55,8 +59,8 @@ class DataBaseTestUsers extends Component {
 
  handleSubmit = () => {
   db.transaction((tx) => {
-    tx.executeSql('INSERT INTO users (username, password) VALUES (?, ?);', 
-    [this.state.username, this.state.password],
+    tx.executeSql('INSERT INTO users (username, email, password) VALUES (?, ?, ?);', 
+    [this.state.username, this.state.email, this.state.password],
     (_,results) => {
       console.log('Added', results.rowsAffected);
     }
@@ -69,7 +73,7 @@ class DataBaseTestUsers extends Component {
         <ScrollView style={styles.carsContainer}>
           <View style={styles.cars}>
             <Text style={styles.make}>
-              {itemData.item.username} {itemData.item.password}
+              {itemData.item.username} {itemData.item.email} {itemData.item.password}
             </Text>
           </View>
         </ScrollView>
@@ -84,6 +88,12 @@ class DataBaseTestUsers extends Component {
             value={this.state.username}
             placeholder="Userio Vardas"
             onChangeText={(text) => this.userNameChange(text)}
+          />
+          <TextInput
+            style={styles.input}
+            value={this.state.email}
+            placeholder="El pastas"
+            onChangeText={(text) => this.emailChange(text)}
           />
           <TextInput
             style={styles.input}
