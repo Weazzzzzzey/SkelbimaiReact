@@ -1,31 +1,72 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { showAll, deleteAd } from "../../store/actions/actions";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class deleteScreen extends Component {
-    componentDidMount() {
-        this.props.showAll();
+  constructor() {
+    super();
+    this.state = {
+      asyncStorageUserValue: "",
+    };
+    this.getDate();
+  }
+
+  getDate = async () => {
+    try {
+      const value = await AsyncStorage.getItem("username");
+      if (value != null) {
+        this.setState({ asyncStorageUserValue: value });
+        console.log(value + "---------------------------------------");
       }
-    render() {
-        const {advertises} = this.props;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  componentDidMount() {
+    this.props.showAll();
+  }
+
+  render() {
+    const { advertises } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Ištrinkite skelbimą!</Text>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.userNameView}>
+            <Text style={styles.usernamest}>
+              {this.state.asyncStorageUserValue}
+            </Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button title="Atsijungti" />
+          </View>
+        </View>
+        <Text style={styles.title}>Skelbimų trinimas</Text>
         <ScrollView style={styles.advertiseContainer}>
           {advertises.advertises.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
-              <View style={{flex: 1, justifyContent: 'center'}}>
-                <Text style={styles.advert}>
-                  {advertise.title}
-                </Text>
-                <Text style={styles.advert}>
-                  {advertise.text}
-                </Text>
+              <View style={{ flex: 1, justifyContent: "center" }}>
+                <Text style={styles.advert}>{advertise.title}</Text>
+                <Text style={styles.advert}>{advertise.text}</Text>
               </View>
               <View style={styles.deleteButton}>
-                <TouchableOpacity onPress={() => this.props.deleteAd(advertise.adid)}>
+                <TouchableOpacity
+                  onPress={() => this.props.deleteAd(advertise.adid)}
+                >
                   <View style={styles.addButtonContainer}>
                     <Text style={styles.addButton}>Naikinti</Text>
                   </View>
@@ -56,17 +97,28 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 5,
   },
+  buttonView: {
+    backgroundColor: "darkblue",
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  userNameView: {
+    backgroundColor: "darkblue",
+    flex: 0.7,
+    justifyContent: "center",
+  },
   advert: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   text: {
     fontSize: 14,
-    color: '#999',
+    color: "#999",
   },
   title: {
-    paddingTop: 30,
-    paddingBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
@@ -78,6 +130,14 @@ const styles = StyleSheet.create({
   addButton: {
     fontSize: 24,
     lineHeight: 24,
+  },
+  usernamest: {
+    paddingTop: 30,
+    paddingBottom: 5,
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
   },
   addButtonContainer: {
     width: 100,

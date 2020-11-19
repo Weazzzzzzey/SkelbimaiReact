@@ -144,6 +144,16 @@ const styles = StyleSheet.create({
     height: 40,
     width: 60,
   },
+  buttonView: {
+    backgroundColor: "darkblue", 
+    flex: 0.3,
+    justifyContent: "center",
+  },
+  userNameView: {
+    backgroundColor: "darkblue", 
+    flex: 0.7,
+    justifyContent: "center",
+  },
   inputWrapper: {
     flex: 2,
   },

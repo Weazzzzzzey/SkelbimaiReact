@@ -48,7 +48,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login_page">
+          <Stack.Navigator initialRouteName="PrivatePage">
             <Stack.Screen
               name="Users_Check"
               component={databaseUsersScreen}

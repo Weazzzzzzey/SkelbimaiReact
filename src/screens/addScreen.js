@@ -1,34 +1,75 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity,} from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import "react-native-gesture-handler";
 import * as Random from "expo-random";
 import { addAd } from "../../store/actions/actions";
 import { connect } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class addScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          title: '',
-          text: '',
-        };
-      }
-      
-      handleSubmit = () => {
-        this.props.addAd(this.state.title, this.state.text, Random.getRandomBytes(1), 1);
-        this.setState({title: '', text: ''});
-      };
-      titleChange(title) {
-        this.setState({title});
-      }
-      textChange(text) {
-        this.setState({text});
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      text: "",
+      asyncStorageUserValue: "",
+    };
+    this.getDate();
+  }
 
-  
-    render() {
+  handleSubmit = () => {
+    this.props.addAd(
+      this.state.title,
+      this.state.text,
+      Random.getRandomBytes(1),
+      1
+    );
+    this.setState({ title: "", text: "" });
+  };
+  titleChange(title) {
+    this.setState({ title });
+  }
+  textChange(text) {
+    this.setState({ text });
+  }
+
+  getDate = async () => {
+    try {
+      const value = await AsyncStorage.getItem("username");
+      if (value != null) {
+        this.setState({ asyncStorageUserValue: value });
+        console.log(value + "---------------------------------------");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  render() {
     return (
       <View style={styles.container}>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.userNameView}>
+            <Text style={styles.usernamest}>
+              {this.state.asyncStorageUserValue}
+            </Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button style={{borderRadius: 10}} title="Atsijungti"  />
+          </View>
+        </View>
+
         <Text style={styles.title}>Pridėkite skelbimą!</Text>
         <View style={styles.inputWrapper}>
           <TextInput
@@ -57,56 +98,78 @@ class addScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 2,
-    },
-    inputContainer: {
-      backgroundColor: '#ffffff',
-      borderTopColor: '#ededed',
-      borderTopWidth: 1,
-      flexDirection: 'row',
-      height: 40,
-      width: 60,
-    },
-    inputWrapper: {
-      flex: 2,
-    },
-    input: {
-      height: 44,
-      padding: 7,
-      backgroundColor: '#ededed',
-      borderColor: '#ddd',
-      borderWidth: 1,
-      borderRadius: 10,
-      flex: 1,
-      marginBottom: 5,
-    },
-    addButtonText: {
-      fontSize: 24,
-      lineHeight: 24,
-    },
-    addButton: {
-      width: 120,
-      height: 60,
-      backgroundColor: 'dodgerblue',
-      marginLeft: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 10,
-    },
-    addButtonContainer: {
-      flex: 4,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
-    title: {
-      paddingTop: 30,
-      paddingBottom: 20,
-      fontSize: 20,
-      textAlign: 'center',
-      fontWeight: 'bold',
-    },
-  });
+  container: {
+    flex: 2,
+  },
+  inputContainer: {
+    backgroundColor: "#ffffff",
+    borderTopColor: "#ededed",
+    borderTopWidth: 1,
+    flexDirection: "row",
+    height: 40,
+    width: 60,
+  },
+  buttonStyle: {
+    borderRadius: 10,
+  },
+  inputWrapper: {
+    flex: 2,
+  },
+  buttonView: {
+    backgroundColor: "darkblue",
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: 'center',
+  },
+  userNameView: {
+    backgroundColor: "darkblue",
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  input: {
+    height: 44,
+    padding: 7,
+    backgroundColor: "#ededed",
+    borderColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 1,
+    marginBottom: 5,
+  },
+  addButtonText: {
+    fontSize: 24,
+    lineHeight: 24,
+  },
+  usernamest: {
+    paddingTop: 30,
+    paddingBottom: 5,
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+  addButton: {
+    width: 120,
+    height: 60,
+    backgroundColor: "dodgerblue",
+    marginLeft: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  addButtonContainer: {
+    flex: 4,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  title: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+});
 
 const mapStateToProps = (state) => {
   return {

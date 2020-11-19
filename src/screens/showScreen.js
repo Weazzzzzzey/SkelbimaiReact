@@ -1,80 +1,141 @@
-import React, {Component} from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity,} from 'react-native';
-import 'react-native-gesture-handler';
-import {connect} from 'react-redux';
-import {showAll} from '../../store/actions/actions';
+import { StatusBar } from "react-native";
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Button,
+} from "react-native";
+import "react-native-gesture-handler";
+import { connect } from "react-redux";
+import { showAll } from "../../store/actions/actions";
+import AsyncStorage from "@react-native-community/async-storage";
 
+class showScreen extends Component {
+  constructor() {
+    super();
+    this.state = {
+      asyncStorageUserValue: "",
+    };
+    this.getDate();
+  }
 
-class showScreen extends Component{
-    componentDidMount() {
-        this.props.showAll();
+  componentDidMount() {
+    this.props.showAll();
+  }
+
+  getDate = async () => {
+    try {
+      const value = await AsyncStorage.getItem("username");
+      if (value != null) {
+        this.setState({ asyncStorageUserValue: value });
+        console.log(value + "---------------------------------------");
       }
-    render() {
-        const {advertises} = this.props;
-        return (
-        <View style={styles.container}>
-            <Text style = {styles.title}>Peržiūrėkite skelbimus!</Text>
-            <ScrollView style={styles.advertiseContainer}>
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  render() {
+    const { advertises } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.userNameView}>
+            <Text style={styles.usernamest}>
+              {this.state.asyncStorageUserValue}
+            </Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button title="Atsijungti" />
+          </View>
+        </View>
+        <Text style={styles.title}>Skelbimai</Text>
+        <ScrollView style={styles.advertiseContainer}>
           {advertises.advertises.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
-              <Text style={styles.advert}>
-                {advertise.title}
-              </Text>
-              <Text style={styles.text}>
-                {advertise.text}
-              </Text>
-              <Text style={styles.text}>
-                {advertise.adid}
-              </Text>
-              <Text style={styles.text}>
-                {advertise.userid}
-              </Text>
+              <Text style={styles.advert}>{advertise.title}</Text>
+              <Text style={styles.text}>{advertise.text}</Text>
+              <Text style={styles.text}>{advertise.adid}</Text>
+              <Text style={styles.text}>{advertise.userid}</Text>
             </View>
           ))}
         </ScrollView>
-        </View>
-        );
-    }
+      </View>
+    );
+  }
 }
 
-
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    advertiseContainer: {
-      borderTopWidth: 3,
-      borderTopColor: '#ddd',
-      flex: 1,
-    },
-    advertises: {
-      padding: 20,
-      backgroundColor: '#ededed',
-      borderColor: '#ddd',
-      borderWidth: 1,
-      borderRadius: 10,
-      marginBottom: 5,
-    },
-    advert: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-    text: {
-      fontSize: 14,
-      color: '#999',
-    },
-    title: {
-      paddingTop: 30,
-      paddingBottom: 20,
-      fontSize: 20,
-      textAlign: 'center',
-      fontWeight: 'bold',
-    },
-  });
+  container: {
+    flex: 1,
+  },
+  container1: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  advertiseContainer: {
+    borderTopWidth: 3,
+    borderTopColor: "#ddd",
+    flex: 1,
+  },
+  buttonView: {
+    backgroundColor: "darkblue",
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: 'center',
+  },
+  userNameView: {
+    backgroundColor: "darkblue",
+    flex: 0.7,
+    justifyContent: "center",
+  },
+  advertises: {
+    padding: 20,
+    backgroundColor: "#ededed",
+    borderColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  advert: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  text: {
+    fontSize: 14,
+    color: "#999",
+  },
+  title: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  usernamest: {
+    paddingTop: 30,
+    paddingBottom: 5,
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+});
 
-  const mapStateToProps = (state) => {
-      return {
-        advertises: state.advertises,
-    };
+const mapStateToProps = (state) => {
+  return {
+    advertises: state.advertises,
   };
-  export default connect(mapStateToProps, {showAll})(showScreen);
+};
+export default connect(mapStateToProps, { showAll })(showScreen);

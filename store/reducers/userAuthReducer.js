@@ -1,7 +1,7 @@
 export const userLogin = (state = {isLoggedIn: false}, action) => {
     switch (action.type) {
       case 'LOGIN_SUCCESS':
-        console.log(action.payload);
+      console.log(action.payload);
         const newState = {
           isLoggedIn: action.payload,
         };
