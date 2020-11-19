@@ -30,8 +30,6 @@ store.dispatch(addAd('Taisyklės', 'Laikytis sistemos taisyklių!', 1, 0));
 
 const PrivateContainer = () => {
     return (
-      
-        <Tab.Navigator>
           <Tab.Navigator
             initialRoute="showMainInformation"
             tabBarOptions={{ activeTintColor: "dodgerblue" }}
@@ -41,9 +39,6 @@ const PrivateContainer = () => {
             <Tab.Screen name="DELETE" component={deleteScreen} />
             <Tab.Screen name="DATABASE" component={databaseUsersScreen} />
           </Tab.Navigator>
-          <StatusBar style="auto" />
-        </Tab.Navigator>
-      
     );
 }
 

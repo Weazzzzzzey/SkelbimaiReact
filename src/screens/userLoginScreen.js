@@ -19,18 +19,20 @@ class userLoginScreen extends Component {
   }
   passwordChange(password) {
     this.setState({ password });
-
-    handleSubmit = () => {
-      this.props.loginUser(this.state.username, this.state.password, () => {
-        console.log("Login " + this.props.login.isLoggedIn);
-        if (this.props.login.isLoggedIn === true) {
-          this.props.navigation.navigate("PrivatePage");
-        } else {
-          Alert.alert("Wrong credentials");
-        }
-      });
-    };
   }
+
+  handleSubmit = () => {
+    this.props.loginUser(this.state.username, this.state.password, () => {
+      console.log("Login " + this.props.login.isLoggedIn);
+      if (this.props.login.isLoggedIn === true) {
+        //Alert.alert("OK");
+        this.props.navigation.navigate("PrivatePage");
+      } else {
+        Alert.alert("Wrong credentials");
+      }
+    });
+  };
+
   render() {
     return (
       <View>
