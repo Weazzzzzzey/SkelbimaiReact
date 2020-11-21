@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { showAll } from "../../store/actions/actions";
-
+//import { showAll } from "../../store/actions/actions";
+import { showAll} from "../../store/actions/advertisesAction";
 import AsyncStorage from "@react-native-community/async-storage";
 
 class showScreen extends Component {
@@ -53,7 +53,7 @@ class showScreen extends Component {
   };
 
   render() {
-    const { advertises } = this.props;
+    const { advertisesdb } = this.props;
 
     return (
       <View style={styles.container}>
@@ -75,12 +75,12 @@ class showScreen extends Component {
         </View>
         <Text style={styles.title}>Skelbimai</Text>
         <ScrollView style={styles.advertiseContainer}>
-          {advertises.advertises.map((advertise, index) => (
+          {advertisesdb.advertisesdb.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
               <Text style={styles.advert}>{advertise.title}</Text>
-              <Text style={styles.text}>{advertise.text}</Text>
-              <Text style={styles.text}>{advertise.adid}</Text>
-              <Text style={styles.text}>{advertise.userid}</Text>
+              <Text style={styles.text}>{advertise.advertisetext}</Text>
+              <Text style={styles.text}>{advertise.username}</Text>
+              <Text style={styles.text}>{advertise.id}</Text>
             </View>
           ))}
         </ScrollView>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    advertises: state.advertises,
+    advertisesdb: state.advertisesdb,
   };
 };
 export default connect(mapStateToProps, { showAll })(showScreen);

@@ -86,15 +86,33 @@ class userRegisterScreen extends Component {
           this.state.password,
         );
         Alert.alert('Regsitracija sėkminga.');
-        this.props.navi
+        this.props.navigation.navigate("Login_page");
       }
     };
   
     render() {
       return (
         <View>
+          
+          <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.userNameView}>
+            <Text style={styles.usernamest}>
+              
+            </Text>
+          </View>
+          <View style={styles.userNameView}></View>
+        </View>
+
+        <Text style={styles.pradzia}></Text>
+
+        <Text style={styles.title1}>Registracija</Text>
+
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Username:</Text>
+            <Text style={styles.title}>Vartotojo vardas</Text>
             <TextInput
               style={styles.input}
               value={this.state.username}
@@ -109,22 +127,22 @@ class userRegisterScreen extends Component {
             </View>
           ) : null}
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Email:</Text>
+            <Text style={styles.title}>El. paštas</Text>
             <TextInput
               style={styles.input}
               value={this.state.email}
-              placeholder="Įveskite emailą"
+              placeholder="Įveskite el. paštą"
               onChangeText={(text) => this.emailChange(text)}
               secureTextEntry={false}
             />
           </View>
           {this.state.emailError ? (
             <View>
-              <Text>Emailas negalimas</Text>
+              <Text>El. paštas negalimas</Text>
             </View>
           ) : null}
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Password:</Text>
+            <Text style={styles.title}>Slaptažodis</Text>
             <TextInput
               style={styles.input}
               value={this.state.password}
@@ -139,23 +157,32 @@ class userRegisterScreen extends Component {
             </View>
           ) : null}
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Confirm password:</Text>
+            <Text style={styles.title}>Slaptažodžio pativirtinimas</Text>
             <TextInput
               style={styles.input}
               value={this.state.passwordConfirm}
-              placeholder="Confirm your password"
+              placeholder="Pakartokite slaptažodį"
               onChangeText={(text) => this.passwordConfirmChange(text)}
               secureTextEntry={true}
             />
           </View>
           {this.state.passwordConfirmError ? (
             <View>
-              <Text>Password must match</Text>
+              <Text>Slaptažodis turi sutapti</Text>
             </View>
           ) : null}
+          
+          <Text style={styles.pertvara}></Text>
+          
           <CustomButton
-            title="Register"
+            color="darkblue"
+            title="Registruotis"
             onPress={() => this.handleSubmit()}
+            disabled={false}
+          />
+          <CustomButton
+            title="Grįžti"
+            onPress={() => this.props.navigation.navigate("Login_page")}
             disabled={false}
           />
         </View>
@@ -184,6 +211,41 @@ class userRegisterScreen extends Component {
       textAlign: 'left',
       fontWeight: 'bold',
     },
+    title1: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        fontSize: 20,
+        textAlign: "center",
+        fontWeight: "bold",
+      },
+      userNameView: {
+        backgroundColor: "darkblue",
+        flex: 0.5,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      usernamest: {
+        paddingTop: 30,
+        paddingBottom: 5,
+        fontSize: 16,
+        textAlign: "center",
+        fontWeight: "bold",
+        color: "white",
+      },
+      pradzia: {
+        paddingTop: 1,
+        paddingBottom: 100,
+        fontSize: 5,
+        textAlign: "center",
+        fontWeight: "bold",
+      },
+      pertvara: {
+        paddingTop: 1,
+        paddingBottom: 1,
+        fontSize: 5,
+        textAlign: "center",
+        fontWeight: "bold",
+      },
   });
   
   const mapStateToProps = (state) => {

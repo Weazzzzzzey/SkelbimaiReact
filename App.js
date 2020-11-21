@@ -17,6 +17,8 @@ import combineReducers from "./store/reducers/index";
 import {addAd} from './store/actions/actions';
 import loginScreen from './src/screens/userLoginScreen';
 import registerScreen from './src/screens/userRegisterScreen';
+import AsyncStorage from "@react-native-community/async-storage";
+import { createUser } from "./db";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -28,6 +30,7 @@ store.dispatch(addAd('Taisyklės', 'Laikytis sistemos taisyklių!', 1, 0));
 
 //console.log('After', store.getState());
 
+
 const PrivateContainer = () => {
     return (
           <Tab.Navigator
@@ -37,7 +40,7 @@ const PrivateContainer = () => {
             <Tab.Screen name="SHOW" component={showScreen} />
             <Tab.Screen name="ADD" component={addScreen} />
             <Tab.Screen name="DELETE" component={deleteScreen} />
-            <Tab.Screen name="DATABASE" component={databaseScreen} />
+            <Tab.Screen name="DATABASE" component={loginScreen} />
           </Tab.Navigator>
     );
 }

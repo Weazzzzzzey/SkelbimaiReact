@@ -9,7 +9,8 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { showAll, deleteAd } from "../../store/actions/actions";
+//import { showAll, deleteAd } from "../../store/actions/actions";
+import { showAll, removeAdvertise} from "../../store/actions/advertisesAction";
 import AsyncStorage from "@react-native-community/async-storage";
 
 class deleteScreen extends Component {
@@ -50,7 +51,7 @@ class deleteScreen extends Component {
   }
 
   render() {
-    const { advertises } = this.props;
+    const { advertisesdb } = this.props;
     return (
       <View style={styles.container}>
         <View
@@ -71,15 +72,16 @@ class deleteScreen extends Component {
         </View>
         <Text style={styles.title}>Skelbimų trinimas</Text>
         <ScrollView style={styles.advertiseContainer}>
-          {advertises.advertises.map((advertise, index) => (
+          {advertisesdb.advertisesdb.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text style={styles.advert}>{advertise.title}</Text>
-                <Text style={styles.advert}>{advertise.text}</Text>
+                <Text style={styles.advert}>{advertise.advertisetext}</Text>
+                <Text style={styles.advert}>{advertise.username}</Text>
               </View>
               <View style={styles.deleteButton}>
                 <TouchableOpacity
-                  onPress={() => this.props.deleteAd(advertise.adid)}
+                  onPress={() => this.props.removeAdvertise(advertise.adid)}
                 >
                   <View style={styles.addButtonContainer}>
                     <Text style={styles.addButton}>Naikinti</Text>
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    advertises: state.advertises,
+    advertisesdb: state.advertisesdb,
   };
 };
-export default connect(mapStateToProps, { showAll, deleteAd })(deleteScreen);
+export default connect(mapStateToProps, { showAll, removeAdvertise })(deleteScreen);

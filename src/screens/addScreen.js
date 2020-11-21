@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import * as Random from "expo-random";
-import { addAd } from "../../store/actions/actions";
-//import { addAd} from "../../store/actions/advertisesAction";
+//import { addAd } from "../../store/actions/actions";
+import { addAd} from "../../store/actions/advertisesAction";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -20,6 +20,7 @@ class addScreen extends Component {
     this.state = {
       title: "",
       text: "",
+      user: "",
       asyncStorageUserValue: "",
     };
     this.getDate();
@@ -29,8 +30,7 @@ class addScreen extends Component {
     this.props.addAd(
       this.state.title,
       this.state.text,
-      Random.getRandomBytes(1),
-      1
+      this.state.asyncStorageUserValue,
     );
     this.setState({ title: "", text: "" });
   };
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    advertises: state.advertises,
+    advertisesdb: state.advertisesdb,
   };
 };
 export default connect(mapStateToProps, { addAd })(addScreen);

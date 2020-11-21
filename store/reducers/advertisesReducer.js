@@ -21,7 +21,7 @@ const initialState = {
         }
         return {advertisesdb: [...state.advertisesdb, ...advertiseList]};
       case 'DELETE_AD':
-        const index = state.advertisesdb.findIndex((ad) => ad.id === action.payload.id);
+        const index = state.advertisesdb.findIndex((advertise) => advertise.id === action.payload.id);
         return {
           advertisesdb: [...state.advertisesdb.slice(0, index), ...state.advertisesdb.slice(index + 1)],
         };

@@ -8,5 +8,5 @@ export default combineReducers({
     //advertises: adReducer,
     users : userReducer,
     login: userLogin,
-    //advertisesdb : advertisesReducer,
+    advertisesdb : advertisesReducer,
 });
