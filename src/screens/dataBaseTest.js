@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   View,
   Text,
@@ -6,71 +6,69 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  FlatList
-} from 'react-native';
-import {init, addAdvertise} from './../../db';
-import * as SQLite from 'expo-sqlite'
+  FlatList,
+} from "react-native";
+import { init, addAdvertise } from "./../../db";
+import * as SQLite from "expo-sqlite";
 
-const db = SQLite.openDatabase('advertises.db');
+const db = SQLite.openDatabase("advertises.db");
 init()
   .then(() => {
-    console.log('Initialized database');
+    console.log("Initialized database");
   })
-  .catch(err => {
-    console.log('Initializing db failed.');
+  .catch((err) => {
+    console.log("Initializing db failed.");
     console.log(err);
   });
 class DataBaseTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      advertisetext: '',
-      username: '',
-      userid: '',
+      title: "",
+      advertisetext: "",
+      username: "",
+      userid: "",
       advertiseData: [],
     };
   }
   componentDidMount() {
     db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM advertises', 
-      [],
-      (_,results) => {
-        var temp=[];
-        for (let i = 0; i < results.rows.length; ++i){
+      tx.executeSql("SELECT * FROM advertises", [], (_, results) => {
+        var temp = [];
+        for (let i = 0; i < results.rows.length; ++i) {
           console.log(results.rows.item(i));
           temp.push(results.rows.item(i));
         }
-        this.setState({advertiseData: temp})
-      }
-      )
-    })
+        this.setState({ advertiseData: temp });
+      });
+    });
   }
   titleChange(title) {
-    this.setState({title});
+    this.setState({ title });
     console.log(title);
   }
   advertiseTextChange(advertisetext) {
-    this.setState({advertisetext});
+    this.setState({ advertisetext });
   }
   userNameChange(username) {
-    this.setState({username});
-  }
-  userIdChange(userid) {
-    this.setState({userid});
+    this.setState({ username });
   }
 
-
- handleSubmit = () => {
-  db.transaction((tx) => {
-    tx.executeSql('INSERT INTO advertises (title, advertisetext, username, userid) VALUES (?, ?, ?, ?);', 
-    [this.state.title, this.state.advertisetext, this.state.username, this.state.userid],
-    (_,results) => {
-      console.log('Added', results.rowsAffected);
-    }
-    )
-  })
- }
+  handleSubmit = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO advertises (title, advertisetext, username) VALUES (?, ?, ?);",
+        [
+          this.state.title,
+          this.state.advertisetext,
+          this.state.username,
+        ],
+        (_, results) => {
+          console.log("Added", results.rowsAffected);
+        }
+      );
+    });
+  };
   render() {
     const renderItem = (itemData) => {
       return (
@@ -84,8 +82,8 @@ class DataBaseTest extends Component {
             </Text>
           </View>
         </ScrollView>
-      )
-    }
+      );
+    };
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Prideti skelbima i baze</Text>
@@ -108,12 +106,6 @@ class DataBaseTest extends Component {
             placeholder="Vardas"
             onChangeText={(text) => this.userNameChange(text)}
           />
-          <TextInput
-            style={styles.input}
-            value={this.state.userIdChange}
-            placeholder="user ID"
-            onChangeText={(text) => this.userIdChange(text)}
-          />
         </View>
         <View style={styles.addButtonContainer}>
           <TouchableOpacity onPress={this.handleSubmit}>
@@ -122,7 +114,7 @@ class DataBaseTest extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <FlatList 
+        <FlatList
           data={this.state.advertiseData}
           renderItem={renderItem}
           keyExtractor={(item, index) => item.id.toString()}
@@ -137,20 +129,20 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   inputContainer: {
-    backgroundColor: '#ffffff',
-    borderTopColor: '#ededed',
+    backgroundColor: "#ffffff",
+    borderTopColor: "#ededed",
     borderTopWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 40,
     width: 60,
   },
   buttonView: {
-    backgroundColor: "darkblue", 
+    backgroundColor: "darkblue",
     flex: 0.3,
     justifyContent: "center",
   },
   userNameView: {
-    backgroundColor: "darkblue", 
+    backgroundColor: "darkblue",
     flex: 0.7,
     justifyContent: "center",
   },
@@ -160,8 +152,8 @@ const styles = StyleSheet.create({
   input: {
     height: 44,
     padding: 7,
-    backgroundColor: '#ededed',
-    borderColor: '#ddd',
+    backgroundColor: "#ededed",
+    borderColor: "#ddd",
     borderWidth: 1,
     borderRadius: 10,
     flex: 1,
@@ -174,40 +166,40 @@ const styles = StyleSheet.create({
   addButton: {
     width: 120,
     height: 60,
-    backgroundColor: '#6cc900',
+    backgroundColor: "#6cc900",
     marginLeft: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
   },
   addButtonContainer: {
     flex: 2,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   title: {
     paddingTop: 30,
     paddingBottom: 20,
     fontSize: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
   },
   carsContainer: {
     borderTopWidth: 3,
-    borderTopColor: '#ddd',
+    borderTopColor: "#ddd",
     flex: 1,
   },
   cars: {
     padding: 20,
-    backgroundColor: '#ededed',
-    borderColor: '#ddd',
+    backgroundColor: "#ededed",
+    borderColor: "#ddd",
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 5,
   },
   make: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

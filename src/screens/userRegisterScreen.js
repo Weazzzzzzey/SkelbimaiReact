@@ -86,6 +86,7 @@ class userRegisterScreen extends Component {
           this.state.password,
         );
         Alert.alert('Regsitracija sėkminga.');
+        this.props.navi
       }
     };
   

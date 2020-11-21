@@ -37,7 +37,7 @@ const PrivateContainer = () => {
             <Tab.Screen name="SHOW" component={showScreen} />
             <Tab.Screen name="ADD" component={addScreen} />
             <Tab.Screen name="DELETE" component={deleteScreen} />
-            <Tab.Screen name="DATABASE" component={databaseUsersScreen} />
+            <Tab.Screen name="DATABASE" component={databaseScreen} />
           </Tab.Navigator>
     );
 }
@@ -48,10 +48,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="PrivatePage">
+          <Stack.Navigator initialRouteName="Login_page">
             <Stack.Screen
               name="Users_Check"
-              component={databaseUsersScreen}
+              component={databaseScreen}
               options={{title: 'Users Check Page', headerShown: false}}
             />
             <Stack.Screen

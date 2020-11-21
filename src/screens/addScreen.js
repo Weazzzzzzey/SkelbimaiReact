@@ -10,6 +10,7 @@ import {
 import "react-native-gesture-handler";
 import * as Random from "expo-random";
 import { addAd } from "../../store/actions/actions";
+//import { addAd} from "../../store/actions/advertisesAction";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -42,12 +43,24 @@ class addScreen extends Component {
 
   getDate = async () => {
     try {
-      const value = await AsyncStorage.getItem("username");
+      const value = await AsyncStorage.getItem("tempusername");
       if (value != null) {
         this.setState({ asyncStorageUserValue: value });
         console.log(value + "---------------------------------------");
       }
     } catch (err) {
+      console.log(err);
+    }
+  };
+
+  logOut = async () => {
+    try {
+      await AsyncStorage.removeItem('tempusername');
+      await AsyncStorage.removeItem('username');
+      this.setState({asyncStorageUserValue: ''});
+      this.props.navigation.navigate("Login_page");
+    } 
+    catch (err) {
       console.log(err);
     }
   };
@@ -66,7 +79,9 @@ class addScreen extends Component {
             </Text>
           </View>
           <View style={styles.buttonView}>
-            <Button style={{borderRadius: 10}} title="Atsijungti"  />
+            <Button style={{borderRadius: 10}} title="Atsijungti" onPress={() => {
+            this.logOut();
+          }} />
           </View>
         </View>
 

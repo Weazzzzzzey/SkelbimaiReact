@@ -12,11 +12,12 @@ import {
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { showAll } from "../../store/actions/actions";
+
 import AsyncStorage from "@react-native-community/async-storage";
 
 class showScreen extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       asyncStorageUserValue: "",
     };
@@ -29,12 +30,24 @@ class showScreen extends Component {
 
   getDate = async () => {
     try {
-      const value = await AsyncStorage.getItem("username");
+      const value = await AsyncStorage.getItem("tempusername");
       if (value != null) {
         this.setState({ asyncStorageUserValue: value });
         console.log(value + "---------------------------------------");
       }
     } catch (err) {
+      console.log(err);
+    }
+  };
+
+  logOut = async () => {
+    try {
+      await AsyncStorage.removeItem('tempusername');
+      await AsyncStorage.removeItem('username');
+      this.setState({asyncStorageUserValue: ''});
+      this.props.navigation.navigate("Login_page");
+    } 
+    catch (err) {
       console.log(err);
     }
   };
@@ -55,7 +68,9 @@ class showScreen extends Component {
             </Text>
           </View>
           <View style={styles.buttonView}>
-            <Button title="Atsijungti" />
+            <Button title="Atsijungti" onPress={() => {
+            this.logOut();
+          }}/>
           </View>
         </View>
         <Text style={styles.title}>Skelbimai</Text>

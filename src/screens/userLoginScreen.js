@@ -16,6 +16,7 @@ class userLoginScreen extends Component {
     super();
     this.state = {
       asyncStorageUserValue: "",
+      tempAsyncStorageUserValue: "",
       colorCheck: "dodgerblue",
       rember: false,
     };
@@ -41,11 +42,20 @@ class userLoginScreen extends Component {
     }
   };
 
+  tempLogedIn = async () => {
+    try {
+      this.setState({ tempAsyncStorageUserValue: this.state.username });
+      await AsyncStorage.setItem("tempusername", this.state.tempAsyncStorageUserValue);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   getDate = async () => {
       try {
-        const value = await AsyncStorage.getItem('username');
+        const value = await AsyncStorage.getItem('tempusername');
         if (value != null){
-            console.log(value + "---------------------------------------");
+            console.log(value + "--------------------------Login-------------");
         }
       }
       catch(err){
@@ -63,12 +73,14 @@ class userLoginScreen extends Component {
     this.props.loginUser(this.state.username, this.state.password, () => {
       console.log("Login " + this.props.login.isLoggedIn);
       if (this.props.login.isLoggedIn === true) {
+        this.tempLogedIn();
         if(this.state.rember === true){
             this.saveLogedIn();
         }
         //Alert.alert("OK");
         this.getDate();
         this.props.navigation.navigate("PrivatePage");
+        
       } else {
         Alert.alert("Wrong credentials");
       }
