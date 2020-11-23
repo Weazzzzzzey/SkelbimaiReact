@@ -1,6 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import {StyleSheet, Text, Image, View, Button, Dimensions, Animated, Easing, ImageBackground} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  Alert,
+  Button,
+  Dimensions,
+  Animated,
+  Easing,
+  ImageBackground,
+} from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const { width, height } = Dimensions.get("window");
@@ -40,22 +51,25 @@ class Loading extends Component {
   };
 
   handleSubmit = () => {
-      this.fadeUsersIN();
-      this.startAnimation();
-      this.getDate();
-      if(this.asyncStorageUserValue === ""){
-        this.props.navigation.navigate("Login_page");
-      } else {
-        this.props.navigation.navigate("PrivatePage");
-      }
-    }
+    this.fadeUsersIN();
+    this.startAnimation();
+    /////////////
+    setTimeout(() => {
+        this.getDate();
+      }, 3000);
+
+    ////////////
+  };
 
   getDate = async () => {
     try {
-      const value = await AsyncStorage.getItem('username');
+      const value = await AsyncStorage.getItem("username");
       if (value != null) {
         this.setState({ asyncStorageUserValue: value });
+        this.props.navigation.navigate("PrivatePage");
         console.log(value + "loading--++++-----------");
+      } else {
+        this.props.navigation.navigate("Login_page");
       }
     } catch (err) {
       console.log(err);
@@ -70,15 +84,14 @@ class Loading extends Component {
 
     return (
       <ImageBackground source={backgroundImage} style={styles.image}>
-        <View style ={styles.Alighn}>
+        <View style={styles.Alighn}>
           <Animated.Image
             style={[styles.shadow, { opacity: this.state.fadeUsers }]}
             source={require("../images/shadow.png")}
           />
-          
         </View>
-        <Button title="Animation" onPress={this.getDate} />
-        <View style ={styles.Alighn}>
+
+        <View style={styles.Alighn}>
           <Animated.Image
             style={[styles.logo, { left: toTheLeft }]}
             source={require("../images/logo.png")}
@@ -114,7 +127,7 @@ const styles = StyleSheet.create({
   },
   Alighn: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
