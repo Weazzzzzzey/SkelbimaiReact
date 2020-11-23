@@ -16,6 +16,7 @@ import { applyMiddleware, createStore } from "redux";
 import combineReducers from "./store/reducers/index";
 import {addAd} from './store/actions/actions';
 import loginScreen from './src/screens/userLoginScreen';
+import loading from './src/screens/loading';
 import registerScreen from './src/screens/userRegisterScreen';
 import AsyncStorage from "@react-native-community/async-storage";
 import { createUser } from "./db";
@@ -40,7 +41,7 @@ const PrivateContainer = () => {
             <Tab.Screen name="SHOW" component={showScreen} />
             <Tab.Screen name="ADD" component={addScreen} />
             <Tab.Screen name="DELETE" component={deleteScreen} />
-            <Tab.Screen name="DATABASE" component={loginScreen} />
+            <Tab.Screen name="DATABASE" component={loading} />
           </Tab.Navigator>
     );
 }
@@ -51,10 +52,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login_page">
+          <Stack.Navigator initialRouteName="Loading_Screen">
             <Stack.Screen
-              name="Users_Check"
-              component={databaseScreen}
+              name="Loading_Screen"
+              component={loading}
               options={{title: 'Users Check Page', headerShown: false}}
             />
             <Stack.Screen

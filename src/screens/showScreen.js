@@ -33,7 +33,7 @@ class showScreen extends Component {
       const value = await AsyncStorage.getItem("tempusername");
       if (value != null) {
         this.setState({ asyncStorageUserValue: value });
-        console.log(value + "---------------------------------------");
+        console.log(value + "----------------SHow screen-----------------------");
       }
     } catch (err) {
       console.log(err);

@@ -47,8 +47,9 @@ class userLoginScreen extends Component {
       this.setState({ tempAsyncStorageUserValue: this.state.username });
       await AsyncStorage.setItem(
         "tempusername",
-        this.state.tempAsyncStorageUserValue
-      );
+        this.state.tempAsyncStorageUserValue,
+        console.log('Prideta temp value' + this.tempAsyncStorageUserValue)
+        );
     } catch (err) {
       console.log(err);
     }
