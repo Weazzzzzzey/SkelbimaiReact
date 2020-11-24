@@ -38,10 +38,9 @@ const PrivateContainer = () => {
             initialRoute="showMainInformation"
             tabBarOptions={{ activeTintColor: "dodgerblue" }}
           >
-            <Tab.Screen name="SHOW" component={showScreen} />
-            <Tab.Screen name="ADD" component={addScreen} />
-            <Tab.Screen name="DELETE" component={deleteScreen} />
-            <Tab.Screen name="DATABASE" component={loading} />
+            <Tab.Screen name="Skelbimai" component={showScreen} />
+            <Tab.Screen name="Naujas" component={addScreen} />
+            <Tab.Screen name="Redagavimas" component={deleteScreen} />
           </Tab.Navigator>
     );
 }
@@ -50,7 +49,7 @@ const PrivateContainer = () => {
 class App extends Component {
   render() {
     return (
-      <SafeAreaView style= {{flex: 1}}>
+      
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Loading_Screen">
@@ -77,7 +76,7 @@ class App extends Component {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-      </SafeAreaView>
+      
     );
   }
 }

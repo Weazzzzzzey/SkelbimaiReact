@@ -116,13 +116,17 @@ class userLoginScreen extends Component {
           value={this.state.username}
           placeholder="Įveskite vartotojo vardą"
           onChangeText={(text) => this.usernameChange(text)}
+          secureTextEntry={false}
         />
         <CustomTextInput
+          
           title="Slaptažodis"
           value={this.state.password}
           placeholder="Įveskite slaptažodį"
+          underlineColorAndroid="transparent"
+          secure={true}
           onChangeText={(text) => this.passwordChange(text)}
-          secureTextEntry={true}
+          
         />
         <Text style={styles.pertvara}></Text>
 

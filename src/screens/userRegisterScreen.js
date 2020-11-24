@@ -235,7 +235,7 @@ class userRegisterScreen extends Component {
       },
       pradzia: {
         paddingTop: 1,
-        paddingBottom: 100,
+        paddingBottom: 70,
         fontSize: 5,
         textAlign: "center",
         fontWeight: "bold",

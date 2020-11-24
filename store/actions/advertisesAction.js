@@ -50,7 +50,7 @@ export const showAllByUser = (username) => {
 
 export const removeAdvertise = (id) => {
     return async (dispatch) => {
-      dispatch({type: 'RESET_ADVERTISE_LIST', payload: null});
+      //dispatch({type: 'RESET_ADVERTISE_LIST', payload: null});
       try {
         const dbResult = await deleteAd(id);
         console.log(dbResult);
@@ -58,5 +58,6 @@ export const removeAdvertise = (id) => {
       } catch (err) {
         throw err;
       }
+      
     };
   };

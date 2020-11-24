@@ -53,7 +53,9 @@ class deleteScreen extends Component {
   render() {
     const { advertisesdb } = this.props;
     return (
+      
       <View style={styles.container}>
+        <Text style={styles.pertvara}></Text>
         <View
           style={{
             flexDirection: "row",
@@ -70,18 +72,19 @@ class deleteScreen extends Component {
           }}/>
           </View>
         </View>
-        <Text style={styles.title}>Skelbimų trinimas</Text>
+        <Text style={styles.title}>Skelbimų redagavimas</Text>
         <ScrollView style={styles.advertiseContainer}>
           {advertisesdb.advertisesdb.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <Text style={styles.advert}>{advertise.title}</Text>
-                <Text style={styles.advert}>{advertise.advertisetext}</Text>
+                
                 <Text style={styles.advert}>{advertise.username}</Text>
               </View>
               <View style={styles.deleteButton}>
                 <TouchableOpacity
-                  onPress={() => this.props.removeAdvertise(advertise.adid)}
+                  onPress={() => this.props.removeAdvertise(advertise.id)}
+                
                 >
                   <View style={styles.addButtonContainer}>
                     <Text style={styles.addButton}>Naikinti</Text>
@@ -93,12 +96,18 @@ class deleteScreen extends Component {
         </ScrollView>
       </View>
     );
+    
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  pertvara: {
+    paddingTop: 2,
+    paddingBottom: 3,
+    
   },
   advertiseContainer: {
     borderTopWidth: 3,

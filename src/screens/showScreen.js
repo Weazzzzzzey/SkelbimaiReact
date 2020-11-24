@@ -8,6 +8,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Button,
+  SafeAreaView,
+  Image,
 } from "react-native";
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
@@ -79,6 +81,8 @@ class showScreen extends Component {
     const { advertisesdb } = this.props;
 
     return (
+      <SafeAreaView style= {{flex: 1}}>
+      <Text style={styles.pertvara}></Text>
       <View style={styles.container}>
         <View
           style={{
@@ -107,15 +111,31 @@ class showScreen extends Component {
         
         <ScrollView style={styles.advertiseContainer}>
           {advertisesdb.advertisesdb.map((advertise, index) => (
+          
             <View style={styles.advertises} key={index}>
+              <View style = {{flexDirection: 'row'}}>
+              <View style = {{flex: 0.7}}>
               <Text style={styles.advert}>{advertise.title}</Text>
               <Text style={styles.text}>{advertise.advertisetext}</Text>
-              <Text style={styles.text}>{advertise.username}</Text>
-              <Text style={styles.text}>{advertise.id}</Text>
+              <Text style={styles.text}>{ '€'+ advertise.price}</Text>
+              </View>
+              <View style = {styles.logoProps}>
+              <Image
+                  style={styles.tinyLogo}
+                  source={{
+                    uri: advertise.url,
+                  }}
+                />
+                
+              </View>
+              
+              </View>
+              <Text style={styles.text, {fontWeight: "bold",}}>{advertise.username}</Text>
             </View>
           ))}
         </ScrollView>
       </View>
+      </SafeAreaView>
     );
   }
 }
@@ -123,6 +143,15 @@ class showScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  pertvara: {
+    paddingTop: 2,
+    paddingBottom: 3,
+    
+  },
+  tinyLogo: {
+    width: 100,
+    height: 100,
   },
   container1: {
     flex: 1,
@@ -134,6 +163,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderTopColor: "#ddd",
     flex: 1,
+  },
+  logoProps: {
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: 'center',
   },
   buttonView: {
     backgroundColor: "darkblue",

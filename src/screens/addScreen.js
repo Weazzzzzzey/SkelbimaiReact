@@ -77,6 +77,7 @@ class addScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.pertvara}></Text>
         <View
           style={{
             flexDirection: "row",
@@ -208,6 +209,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  pertvara: {
+    paddingTop: 2,
+    paddingBottom: 3,
+    
   },
 });
 
