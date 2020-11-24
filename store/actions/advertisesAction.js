@@ -1,15 +1,17 @@
-import { fetchAdvertises, addAdvertise, deleteAd } from "../../db";
+import { fetchAdvertises, addAdvertise, deleteAd, fetchByUserName } from "../../db";
 
-export const addAd = (title, advertisetext, username) => {
+export const addAd = (title, advertisetext, url, price, username) => {
   return async (dispatch) => {
     try {
-      const dbResult = await addAdvertise(title, advertisetext, username);
+      const dbResult = await addAdvertise(title, advertisetext, url, price, username);
       console.log(dbResult);
       dispatch({
         type: "ADD_ADVERTISE",
         payload: {
           title: title,
           advertisetext: advertisetext,
+          url: url,
+          price: price,
           username: username,
         },
       });
@@ -32,6 +34,19 @@ export const showAll = () => {
     }
   };
 };
+
+export const showAllByUser = () => {
+    return async (dispatch) => {
+      dispatch({ type: "RESET_ADVERTISE_LIST", payload: null });
+      try {
+        const adResult = await fetchByUserName();
+        dispatch({ type: "SHOW_ALL_USER", payload: adResult.rows });
+      } catch (err) {
+        console.log("Klaida");
+        throw err;
+      }
+    };
+  };
 
 export const removeAdvertise = (id) => {
     return async (dispatch) => {
