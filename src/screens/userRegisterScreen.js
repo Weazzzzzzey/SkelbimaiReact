@@ -78,7 +78,7 @@ class userRegisterScreen extends Component {
         this.state.username.length < 1 ||
         this.state.password.length < 1
       ) {
-        Alert.alert('Something wrong');
+        Alert.alert('Registracija nepavyko');
       } else {
         this.props.addUser(
           this.state.username,
@@ -87,6 +87,7 @@ class userRegisterScreen extends Component {
         );
         Alert.alert('Regsitracija sėkminga.');
         this.props.navigation.navigate("Login_page");
+        this.setState({user: "", email: "" ,password: "", passwordConfirm: "" });
       }
     };
   

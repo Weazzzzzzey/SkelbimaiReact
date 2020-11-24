@@ -7,7 +7,7 @@ export const init = () => {
     db.transaction(tx => {
       tx.executeSql(
         //`DROP TABLE advertises`,  
-        'CREATE TABLE IF NOT EXISTS advertises (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, advertisetext TEXT NOT NULL, username TEXT NOT NULL);',
+        'CREATE TABLE IF NOT EXISTS advertises (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, advertisetext TEXT NOT NULL, url TEXT NOT NULL, price REAL NOT NULL, username TEXT NOT NULL);',
         [],
         () => {
           resolve();
@@ -21,12 +21,12 @@ export const init = () => {
   return promise;
 };
 
-export const addAdvertise = (title, advertisetext, username) => {
+export const addAdvertise = (title, advertisetext, url, price, username) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction(tx => {
           tx.executeSql(
-            `INSERT INTO advertises (title, advertisetext, username) VALUES (?, ?, ?);`,
-            [title, advertisetext, username],
+            `INSERT INTO advertises (title, advertisetext, url, price, username) VALUES (?, ?, ?, ?, ?);`,
+            [title, advertisetext, url, price, username],
             (_, result) => {
               resolve(result);
             },
@@ -63,6 +63,24 @@ export const deleteAd = (id) => {
         tx.executeSql(
           'SELECT * FROM advertises',
           [],
+          (_, result) => {
+            resolve(result);
+          },
+          (_, err) => {
+            reject(err);
+          },
+        );
+      });
+    });
+    return promise;
+  };
+
+  export const fetchByUserName = (username) => {
+    const promise = new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+            'SELECT * FROM advertises WHERE username = ?;',
+          [username],
           (_, result) => {
             resolve(result);
           },

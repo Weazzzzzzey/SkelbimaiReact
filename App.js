@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component, useCallback } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -50,6 +50,7 @@ const PrivateContainer = () => {
 class App extends Component {
   render() {
     return (
+      <SafeAreaView style= {{flex: 1}}>
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Loading_Screen">
@@ -76,6 +77,7 @@ class App extends Component {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
+      </SafeAreaView>
     );
   }
 }

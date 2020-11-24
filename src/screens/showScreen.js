@@ -12,20 +12,43 @@ import {
 import "react-native-gesture-handler";
 import { connect } from "react-redux";
 //import { showAll } from "../../store/actions/actions";
-import { showAll} from "../../store/actions/advertisesAction";
+import { showAll, showAllByUser} from "../../store/actions/advertisesAction";
 import AsyncStorage from "@react-native-community/async-storage";
+import CustomButton from "../components/customButton";
 
 class showScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      colorCheck: "dodgerblue",
       asyncStorageUserValue: "",
+      rember: true,
     };
     this.getDate();
   }
 
+  changeColorFun = () => {
+    if (this.state.colorCheck == "dodgerblue") {
+      this.setState({ colorCheck: "green" });
+      this.setState({ rember: true });
+      this.componentDidMount();
+      console.log("Pakeista i zalia : true" + this.state.rember);
+    } else {
+      this.setState({ colorCheck: "dodgerblue" });
+      this.setState({ rember: false });
+      this.componentDidMount();
+    }
+  };
+
   componentDidMount() {
-    this.props.showAll();
+    if(this.state.rember == true){
+      this.props.showAll();
+    }
+    else 
+    {
+      this.props.showAllByUser(this.state.asyncStorageUserValue);
+    }
+    
   }
 
   getDate = async () => {
@@ -67,6 +90,13 @@ class showScreen extends Component {
               {this.state.asyncStorageUserValue}
             </Text>
           </View>
+
+          <View style={styles.buttonViewFilter}>
+            <Button title="Mano Skelbimai" 
+            color={this.state.colorCheck}
+            onPress={() => {this.changeColorFun()}}/>
+          </View>
+
           <View style={styles.buttonView}>
             <Button title="Atsijungti" onPress={() => {
             this.logOut();
@@ -74,6 +104,7 @@ class showScreen extends Component {
           </View>
         </View>
         <Text style={styles.title}>Skelbimai</Text>
+        
         <ScrollView style={styles.advertiseContainer}>
           {advertisesdb.advertisesdb.map((advertise, index) => (
             <View style={styles.advertises} key={index}>
@@ -106,13 +137,19 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     backgroundColor: "darkblue",
-    flex: 0.3,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: 'center',
+  },
+  buttonViewFilter: {
+    backgroundColor: "darkblue",
+    flex: 1.5,
     justifyContent: "center",
     alignItems: 'center',
   },
   userNameView: {
     backgroundColor: "darkblue",
-    flex: 0.7,
+    flex: 1,
     justifyContent: "center",
   },
   advertises: {
@@ -153,4 +190,4 @@ const mapStateToProps = (state) => {
     advertisesdb: state.advertisesdb,
   };
 };
-export default connect(mapStateToProps, { showAll })(showScreen);
+export default connect(mapStateToProps, { showAll, showAllByUser })(showScreen);

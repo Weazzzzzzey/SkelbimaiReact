@@ -35,12 +35,12 @@ export const showAll = () => {
   };
 };
 
-export const showAllByUser = () => {
+export const showAllByUser = (username) => {
     return async (dispatch) => {
       dispatch({ type: "RESET_ADVERTISE_LIST", payload: null });
       try {
-        const adResult = await fetchByUserName();
-        dispatch({ type: "SHOW_ALL_USER", payload: adResult.rows });
+        const adResult = await fetchByUserName(username);
+        dispatch({ type: "SHOW_ALL",payload: adResult.rows });
       } catch (err) {
         console.log("Klaida");
         throw err;

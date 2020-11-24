@@ -22,13 +22,6 @@ export const advertisesReducer = (state = initialState, action) => {
         console.log(action.payload.item(i));
       }
       return { advertisesdb: [...state.advertisesdb, ...advertiseList] };
-    case "SHOW_ALL_USER":
-      const advertiseList = [];
-      for (let i = 0; i < action.payload.length; ++i) {
-        advertiseList.push(action.payload.item(i));
-        console.log(action.payload.item(i));
-      }
-      return { advertisesdb: [...state.advertisesdb, ...advertiseList] };
     case "DELETE_AD":
       const index = state.advertisesdb.findIndex(
         (advertise) => advertise.id === action.payload.id

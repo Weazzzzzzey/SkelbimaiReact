@@ -83,10 +83,12 @@ class userLoginScreen extends Component {
         //Alert.alert("OK");
         this.getDate();
         this.props.navigation.navigate("PrivatePage");
+        this.setState({username: "", password: ""});
       } else {
         Alert.alert("Neteisingi duomenys");
       }
     });
+    
   };
 
   render() {
